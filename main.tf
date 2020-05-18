@@ -34,51 +34,64 @@ resource "google_compute_instance" "default" {
 }
 */
 // testing instance groups
-resource "google_compute_instance_template" "instance_template" {
-  name_prefix  = "instance-template-"
-  machine_type = "n1-standard-1"
-  region       = "us-central1"
+resource "google_compute_region_autoscaler" "foobar" {
+  name   = "my-region-autoscaler"
+  region = "us-central1"
+  target = google_compute_region_instance_group_manager.foobar.id
 
-  // boot disk
+  autoscaling_policy {
+    max_replicas    = 5
+    min_replicas    = 1
+    cooldown_period = 60
+
+    cpu_utilization {
+      target = 0.5
+    }
+  }
+}
+
+resource "google_compute_instance_template" "foobar" {
+  name           = "my-instance-template"
+  machine_type   = "n1-standard-1"
+  can_ip_forward = false
+
+  tags = ["foo", "bar"]
+
   disk {
-    source_image = "debian-cloud/debian-9"
+    source_image = data.google_compute_image.debian_9.self_link
+  }
+
+  network_interface {
+    network = "default"
+  }
+
+  metadata = {
+    foo = "bar"
+  }
+
+  service_account {
+    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
   }
 }
 
-resource "google_compute_health_check" "autohealing" {
-  name                = "autohealing-health-check"
-  check_interval_sec  = 5
-  timeout_sec         = 5
-  healthy_threshold   = 2
-  unhealthy_threshold = 10 # 50 seconds
-
-  http_health_check {
-    request_path = "/healthz"
-    port         = "8080"
-  }
+resource "google_compute_target_pool" "foobar" {
+  name = "my-target-pool"
 }
 
-resource "google_compute_region_instance_group_manager" "appserver" {
-  name = "appserver-igm"
-
-  base_instance_name         = "app"
-  region                     = "us-central1"
-  distribution_policy_zones  = ["us-central1-a", "us-central1-f"]
+resource "google_compute_region_instance_group_manager" "foobar" {
+  name   = "my-region-igm"
+  region = "us-central1"
 
   version {
-    instance_template = google_compute_instance_template.appserver.self_link
+    instance_template  = google_compute_instance_template.foobar.id
+    name               = "primary"
   }
 
-  target_pools = [google_compute_target_pool.appserver.self_link]
-  target_size  = 2
+  target_pools       = [google_compute_target_pool.foobar.id]
+  base_instance_name = "foobar"
+}
 
-  named_port {
-    name = "custom"
-    port = 8888
-  }
-
-  auto_healing_policies {
-    health_check      = google_compute_health_check.autohealing.self_link
-    initial_delay_sec = 300
-  }
+data "google_compute_image" "debian_9" {
+  family  = "debian-9"
+  project = "debian-cloud"
 }
