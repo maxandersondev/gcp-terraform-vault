@@ -1,6 +1,7 @@
 // Configure the Google Cloud provider
 provider "google" {
  region      = "us-west1"
+ project     = "hashi-project"
 }
 
 // Terraform plugin for creating random ids
