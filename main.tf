@@ -88,7 +88,7 @@ resource "google_compute_region_instance_group_manager" "foobar" {
   }
 
   target_pools       = [google_compute_target_pool.foobar.id]
-  base_instance_name = "foobar"
+  base_instance_name = "hashi-consul"
 }
 
 data "google_compute_image" "debian_9" {
