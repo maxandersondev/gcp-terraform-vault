@@ -66,7 +66,7 @@ resource "google_compute_instance_template" "consul" {
   }
 
   metadata = {
-    foo = "bar"
+    name = "consul-server"
   }
 
   service_account {
