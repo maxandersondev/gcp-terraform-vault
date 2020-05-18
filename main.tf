@@ -34,10 +34,10 @@ resource "google_compute_instance" "default" {
 }
 */
 // testing instance groups
-resource "google_compute_region_autoscaler" "foobar" {
+resource "google_compute_region_autoscaler" "consul" {
   name   = "hashi-vault-region-autoscaler"
   region = "us-central1"
-  target = google_compute_region_instance_group_manager.foobar.id
+  target = google_compute_region_instance_group_manager.consul.id
 
   autoscaling_policy {
     max_replicas    = 5
@@ -50,15 +50,15 @@ resource "google_compute_region_autoscaler" "foobar" {
   }
 }
 
-resource "google_compute_instance_template" "foobar" {
+resource "google_compute_instance_template" "consul" {
   name           = "hashi-vault-instance-template"
   machine_type   = "n1-standard-1"
   can_ip_forward = false
 
-  tags = ["foo", "bar"]
+  tags = ["consul-member"]
 
   disk {
-    source_image = data.google_compute_image.debian_9.self_link
+    source_image = data.google_compute_image.centos_8.self_link
   }
 
   network_interface {
@@ -74,24 +74,29 @@ resource "google_compute_instance_template" "foobar" {
   }
 }
 
-resource "google_compute_target_pool" "foobar" {
+resource "google_compute_target_pool" "consul" {
   name = "hashi-vault-target-pool"
 }
 
-resource "google_compute_region_instance_group_manager" "foobar" {
+resource "google_compute_region_instance_group_manager" "consul" {
   name   = "hashi-vault-region-igm"
   region = "us-central1"
 
   version {
-    instance_template  = google_compute_instance_template.foobar.id
+    instance_template  = google_compute_instance_template.consul.id
     name               = "primary"
   }
 
-  target_pools       = [google_compute_target_pool.foobar.id]
+  target_pools       = [google_compute_target_pool.consul.id]
   base_instance_name = "hashi-consul"
 }
 
 data "google_compute_image" "debian_9" {
   family  = "debian-9"
   project = "debian-cloud"
+}
+
+data "google_compute_image" "centos_8" {
+  family  = "centos-8"
+  project = "centos-cloud"
 }
