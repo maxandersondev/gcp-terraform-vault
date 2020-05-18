@@ -35,7 +35,7 @@ resource "google_compute_instance" "default" {
 */
 // testing instance groups
 resource "google_compute_region_autoscaler" "foobar" {
-  name   = "my-region-autoscaler"
+  name   = "hashi-vault-region-autoscaler"
   region = "us-central1"
   target = google_compute_region_instance_group_manager.foobar.id
 
@@ -51,7 +51,7 @@ resource "google_compute_region_autoscaler" "foobar" {
 }
 
 resource "google_compute_instance_template" "foobar" {
-  name           = "my-instance-template"
+  name           = "hashi-vault-instance-template"
   machine_type   = "n1-standard-1"
   can_ip_forward = false
 
@@ -75,11 +75,11 @@ resource "google_compute_instance_template" "foobar" {
 }
 
 resource "google_compute_target_pool" "foobar" {
-  name = "my-target-pool"
+  name = "hashi-vault-target-pool"
 }
 
 resource "google_compute_region_instance_group_manager" "foobar" {
-  name   = "my-region-igm"
+  name   = "hashi-vault-region-igm"
   region = "us-central1"
 
   version {
