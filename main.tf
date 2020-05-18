@@ -1,6 +1,6 @@
 // Configure the Google Cloud provider
 provider "google" {
- //region      = "us-west1"
+ region      = "us-central1"
  project     = "hashi-project"
 }
 /*
