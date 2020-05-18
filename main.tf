@@ -34,29 +34,40 @@ resource "google_compute_instance" "default" {
 }
 */
 // testing instance groups
-data "google_compute_image" "my_image" {
-  family  = "debian-9"
-  project = "debian-cloud"
-}
+resource "google_compute_health_check" "autohealing" {
+  name                = "autohealing-health-check"
+  check_interval_sec  = 5
+  timeout_sec         = 5
+  healthy_threshold   = 2
+  unhealthy_threshold = 10 # 50 seconds
 
-resource "google_compute_instance_template" "instance_template" {
-  name_prefix  = "instance-template-"
-  machine_type = "n1-standard-1"
-  region       = "us-central1"
-
-  // boot disk
-  disk {
-    source_image = "debian-cloud/debian-9"
+  http_health_check {
+    request_path = "/healthz"
+    port         = "8080"
   }
 }
 
-resource "google_compute_instance_group_manager" "instance_group_manager" {
-  name               = "instance-group-manager"
-  instance_template  = google_compute_instance_template.instance_template.self_link
-  base_instance_name = "instance-group-manager"
-  zone               = "us-central1-f"
+resource "google_compute_region_instance_group_manager" "appserver" {
+  name = "appserver-igm"
+
+  base_instance_name         = "app"
+  region                     = "us-central1"
+  distribution_policy_zones  = ["us-central1-a", "us-central1-f"]
+
   version {
-    instance_template  = google_compute_instance_template.instance_group_manager.self_link
+    instance_template = google_compute_instance_template.appserver.self_link
   }
-  target_size        = "2"
+
+  target_pools = [google_compute_target_pool.appserver.self_link]
+  target_size  = 2
+
+  named_port {
+    name = "custom"
+    port = 8888
+  }
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.autohealing.self_link
+    initial_delay_sec = 300
+  }
 }
