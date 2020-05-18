@@ -7,7 +7,7 @@ provider "google" {
 // testing instance groups
 resource "google_compute_region_autoscaler" "consul" {
   name   = "hashi-consul-region-autoscaler"
-  region = "us-central1"
+  //region = "us-central1"
   target = google_compute_region_instance_group_manager.consul.id
 
   autoscaling_policy {
