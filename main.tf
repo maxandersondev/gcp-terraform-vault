@@ -41,7 +41,7 @@ resource "google_compute_region_autoscaler" "foobar" {
 
   autoscaling_policy {
     max_replicas    = 5
-    min_replicas    = 1
+    min_replicas    = 3
     cooldown_period = 60
 
     cpu_utilization {
