@@ -34,6 +34,17 @@ resource "google_compute_instance" "default" {
 }
 */
 // testing instance groups
+resource "google_compute_instance_template" "instance_template" {
+  name_prefix  = "instance-template-"
+  machine_type = "n1-standard-1"
+  region       = "us-central1"
+
+  // boot disk
+  disk {
+    source_image = "debian-cloud/debian-9"
+  }
+}
+
 resource "google_compute_health_check" "autohealing" {
   name                = "autohealing-health-check"
   check_interval_sec  = 5
