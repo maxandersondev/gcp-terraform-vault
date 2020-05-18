@@ -51,7 +51,7 @@ resource "google_compute_target_pool" "consul" {
 
 resource "google_compute_region_instance_group_manager" "consul" {
   name   = "hashi-consul-region-igm"
-  //region = "us-central1"
+  region = var.gcp_region
 
   version {
     instance_template  = google_compute_instance_template.consul.id
