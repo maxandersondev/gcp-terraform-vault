@@ -22,7 +22,7 @@ resource "google_compute_instance_template" "consul" {
 
   tags = ["consul-member"]
 
-  metadata_startup_script = "${file("scripts/consul-config")}"
+  metadata_startup_script = file("scripts/consul-config")
 
   disk {
     source_image = data.google_compute_image.centos_8.self_link
@@ -56,6 +56,14 @@ resource "google_compute_region_instance_group_manager" "consul" {
 
   target_pools       = [google_compute_target_pool.consul.id]
   base_instance_name = "hashi-consul"
+}
+
+data "template_file" "default" {
+  template = file("scripts/consul-config")
+  vars = {
+    ip_address = "${google_compute_instance_template.consul.network_ip} "
+    consul_version = "https://releases.hashicorp.com/consul/1.7.3/consul_1.7.3_linux_amd64.zip"
+  }
 }
 
 data "google_compute_image" "debian_9" {

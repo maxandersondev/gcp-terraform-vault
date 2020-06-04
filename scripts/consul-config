@@ -1,2 +1,0 @@
-touch /tmp/hello-world
-echo "Hello world" >> /tmp/hello-world
