@@ -63,7 +63,7 @@ data "template_file" "default" {
   vars = {
     ip_address =  "1.1.1.1"
     //ip_address = google_compute_instance_template.consul.network_interface.network_ip
-    consul_version = "releases.hashicorp.com/consul/${consul_version}/consul_${consul_version}_linux_amd64.zip"
+    consul_version = "releases.hashicorp.com/consul/${var.consul_version}/consul_${var.consul_version}_linux_amd64.zip"
   }
 }
 
