@@ -22,6 +22,8 @@ resource "google_compute_instance_template" "consul" {
 
   tags = ["consul-member"]
 
+  metadata_startup_script = "${file("scripts/consul-config")}"
+
   disk {
     source_image = data.google_compute_image.centos_8.self_link
   }
