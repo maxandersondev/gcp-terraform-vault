@@ -22,7 +22,7 @@ resource "google_compute_instance_template" "consul" {
 
   tags = ["consul-member"]
 
-  metadata_startup_script = "${data.template_file.default.rendered}"
+  metadata_startup_script = data.template_file.default.rendered
 
   disk {
     source_image = data.google_compute_image.centos_8.self_link
@@ -61,7 +61,7 @@ resource "google_compute_region_instance_group_manager" "consul" {
 data "template_file" "default" {
   template = file("scripts/consul-config")
   vars = {
-    ip_address = "${google_compute_instance_template.consul.network_ip} "
+    ip_address = google_compute_instance_template.consul.network_ip
     consul_version = "https://releases.hashicorp.com/consul/1.7.3/consul_1.7.3_linux_amd64.zip"
   }
 }
