@@ -33,5 +33,5 @@ variable "consul_server_cluster_size" {
 variable "consul_version" {
   description = "Version of consul we intend on using"
   type        = string
-  default     1.7.3
+  default     = "1.7.3"
 }
