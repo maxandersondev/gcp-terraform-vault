@@ -61,7 +61,7 @@ resource "google_compute_region_instance_group_manager" "consul" {
 data "template_file" "default" {
   template = file("${path.module}/scripts/consul-config.tpl")
   vars = {
-    consul_version = "releases.hashicorp.com/consul/${var.consul_version}/consul_${var.consul_version}_linux_amd64.zip"
+    consul_download_url = "releases.hashicorp.com/consul/${var.consul_version}/consul_${var.consul_version}_linux_amd64.zip"
   }
 }
 
