@@ -61,8 +61,8 @@ resource "google_compute_region_instance_group_manager" "consul" {
 data "template_file" "default" {
   template = file("${path.module}/scripts/consul-config.tpl")
   vars = {
-    //ip_address =  "1.1.1.1" //google_compute_instance_template.consul.network_ip
-    ip_address = google_compute_instance_template.consul.network_interface.network_ip
+    ip_address =  "1.1.1.1"
+    //ip_address = google_compute_instance_template.consul.network_interface.network_ip
     consul_version = "releases.hashicorp.com/consul/${consul_version}/consul_${consul_version}_linux_amd64.zip"
   }
 }
