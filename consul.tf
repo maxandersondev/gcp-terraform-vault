@@ -56,6 +56,7 @@ resource "google_compute_region_instance_group_manager" "consul" {
 
   target_pools       = [google_compute_target_pool.consul.id]
   base_instance_name = "hashi-consul"
+  wait_for_instances = true
 }
 
 output "target_pools_members" {
