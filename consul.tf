@@ -58,6 +58,10 @@ resource "google_compute_region_instance_group_manager" "consul" {
   base_instance_name = "hashi-consul"
 }
 
+output "target_pools_members" {
+  value = google_compute_target_pool.consul.instances
+}
+
 output "startup_script_rendered" {
   value = data.template_file.default.rendered
 }
