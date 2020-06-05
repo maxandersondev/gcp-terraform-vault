@@ -62,10 +62,6 @@ output "startup_script_rendered" {
   value = data.template_file.default.rendered
 }
 
-output "ip" {
-  value = google_compute_address.vm_static_ip.address
-}
-
 data "template_file" "default" {
   template = file("${path.module}/scripts/consul-config.tpl")
   vars = {
