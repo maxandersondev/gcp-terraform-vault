@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 touch /tmp/consul-version
 echo "${consul_download_url}" >> /tmp/consul-version

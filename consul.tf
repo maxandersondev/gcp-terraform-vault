@@ -58,6 +58,14 @@ resource "google_compute_region_instance_group_manager" "consul" {
   base_instance_name = "hashi-consul"
 }
 
+output "startup_script_rendered" {
+  value = data.template_file.default.rendered
+}
+
+output "ip" {
+  value = google_compute_address.vm_static_ip.address
+}
+
 data "template_file" "default" {
   template = file("${path.module}/scripts/consul-config.tpl")
   vars = {
