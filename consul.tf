@@ -30,7 +30,8 @@ resource "google_compute_instance_template" "consul" {
 
   network_interface {
     network = google_compute_network.vpc_network.self_link
-
+  }
+  
   metadata = {
     name = "consul-server"
   }
