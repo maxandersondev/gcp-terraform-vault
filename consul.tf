@@ -29,7 +29,7 @@ resource "google_compute_instance_template" "consul" {
   }
 
   network_interface {
-    network = "default"
+    network = "hashi-vpc-network"
   }
 
   metadata = {
