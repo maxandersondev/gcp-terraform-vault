@@ -1,5 +1,10 @@
 resource "google_compute_network" "managment" {
-  name = "hashi-vpc-network"
+  name = "hashi-managment-network"
+  auto_create_subnetworks = "false"
+}
+
+resource "google_compute_network" "trust" {
+  name                    = "hashi-trust-network"
   auto_create_subnetworks = "false"
 }
 
@@ -11,6 +16,15 @@ resource "google_compute_subnetwork" "management-sub" {
   region        = var.gcp_region
 }
 
+// Adding VPC Networks to Project  TRUST
+resource "google_compute_subnetwork" "trust-sub" {
+  name          = "trust-sub"
+  ip_cidr_range = "10.0.2.0/24"
+  network       = google_compute_network.trust.self_link
+  region        = var.gcp_region
+}
+
+/*
 resource "google_compute_firewall" "default" {
   name    = "test-firewall"
   network = google_compute_network.managment.name
@@ -27,3 +41,4 @@ resource "google_compute_firewall" "default" {
   source_ranges = ["0.0.0.0/0"]
   //source_tags = ["web"]
 }
+*/
