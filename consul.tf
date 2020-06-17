@@ -29,7 +29,7 @@ resource "google_compute_instance_template" "consul" {
   }
 
   network_interface {
-    network = google_compute_network.managment.self_link
+    network = "default" //google_compute_network.managment.self_link
   }
 
   metadata = {
