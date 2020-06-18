@@ -24,7 +24,7 @@ resource "google_compute_subnetwork" "trust-sub" {
   region        = var.gcp_region
 }
 
-/*
+
 resource "google_compute_firewall" "default" {
   name    = "test-firewall"
   network = google_compute_network.managment.name
@@ -41,4 +41,17 @@ resource "google_compute_firewall" "default" {
   source_ranges = ["0.0.0.0/0"]
   //source_tags = ["web"]
 }
-*/
+
+// Adding GCP Firewall Rules for OUTBOUND
+resource "google_compute_firewall" "allow-outbound" {
+  name    = "allow-outbound"
+  network = "${google_compute_network.trust.self_link}"
+
+  allow {
+    protocol = "all"
+
+    # ports    = ["all"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
