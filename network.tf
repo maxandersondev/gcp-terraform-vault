@@ -45,7 +45,7 @@ resource "google_compute_firewall" "default" {
 // Adding GCP Firewall Rules for OUTBOUND
 resource "google_compute_firewall" "allow-outbound" {
   name    = "allow-outbound"
-  network = "${google_compute_network.trust.self_link}"
+  network = google_compute_network.trust.self_link
   direction = "EGRESS"
   allow {
     protocol = "all"
@@ -54,4 +54,16 @@ resource "google_compute_firewall" "allow-outbound" {
   }
 
   //source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "allow-inbound" {
+  name    = "trust-allow-inbound"
+  network = google_compute_network.trust.self_link
+  
+  allow {
+    protocol = "all"
+    ports    = ["all"]
+  }
+
+  source_ranges = ["10.0.2.0/24"]
 }
