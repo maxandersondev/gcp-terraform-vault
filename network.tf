@@ -46,12 +46,12 @@ resource "google_compute_firewall" "default" {
 resource "google_compute_firewall" "allow-outbound" {
   name    = "allow-outbound"
   network = "${google_compute_network.trust.self_link}"
-
+  direction = "EGRESS"
   allow {
     protocol = "all"
 
     # ports    = ["all"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  //source_ranges = ["0.0.0.0/0"]
 }
