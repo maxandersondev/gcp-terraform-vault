@@ -12,7 +12,7 @@ resource "google_compute_network" "trust" {
 resource "google_compute_subnetwork" "management-sub" {
   name          = "management-sub"
   ip_cidr_range = "10.0.0.0/24"
-  network       = google_compute_network.managment.self_link
+  network       = google_compute_network.management.self_link
   region        = var.gcp_region
 }
 
