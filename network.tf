@@ -26,7 +26,7 @@ resource "google_compute_subnetwork" "trust-sub" {
 
 
 resource "google_compute_firewall" "default" {
-  name    = "test-firewall"
+  name    = "management-firewall"
   network = google_compute_network.managment.name
 
   allow {
@@ -70,8 +70,8 @@ resource "google_compute_firewall" "allow-inbound" {
 
 resource "google_compute_router" "hashi-router" {
   name    = "hashi-router"
-  region  = google_compute_subnetwork.trust-sub.region
-  network = google_compute_network.trust.id
+  region  = google_compute_subnetwork.management-sub.region
+  network = google_compute_network.management.id
 
   bgp {
     asn = 64514
