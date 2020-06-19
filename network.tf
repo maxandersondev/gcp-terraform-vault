@@ -1,4 +1,4 @@
-resource "google_compute_network" "managment" {
+resource "google_compute_network" "management" {
   name = "hashi-managment-network"
   auto_create_subnetworks = "false"
 }
@@ -27,7 +27,7 @@ resource "google_compute_subnetwork" "trust-sub" {
 
 resource "google_compute_firewall" "default" {
   name    = "management-firewall"
-  network = google_compute_network.managment.name
+  network = google_compute_network.management.name
 
   allow {
     protocol = "icmp"
