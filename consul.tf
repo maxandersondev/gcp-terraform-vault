@@ -17,10 +17,11 @@ resource "google_compute_region_autoscaler" "consul" {
 
 resource "google_compute_instance_template" "consul" {
   name           = "hashi-consul-instance-template"
+  description    = "This template will be used to set up consul nodes"
   machine_type   = "n1-standard-1"
   can_ip_forward = false
 
-  tags = ["consul-member"]
+  tags = ["consul-member", "consul-cluster-node"]
 
   metadata_startup_script = data.template_file.default.rendered
 
