@@ -67,3 +67,26 @@ resource "google_compute_firewall" "allow-inbound" {
 
   source_ranges = ["10.0.2.0/24"]
 }
+
+resource "google_compute_router" "hashi-router" {
+  name    = "hashi-router"
+  region  = google_compute_subnetwork.trust-sub.region
+  network = google_compute_network.trust.id
+
+  bgp {
+    asn = 64514
+  }
+}
+
+resource "google_compute_router_nat" "hashi-nat" {
+  name                               = "hashi-router-nat"
+  router                             = google_compute_router.hashi-router.name
+  region                             = google_compute_router.hashi-router.region
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+
+  log_config {
+    enable = true
+    filter = "ERRORS_ONLY"
+  }
+}
