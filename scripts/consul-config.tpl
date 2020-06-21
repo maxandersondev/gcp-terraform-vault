@@ -13,5 +13,5 @@ export IP_INTERNAL=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | gr
 echo $IP_INTERNAL >> /tmp/my-ip
 sleep 30s
 
-sudo wget http://${consul_download_url} -P /tmp -O consul.zip
+sudo wget http://${consul_download_url} -O /tmp/consul.zip
 echo "Finished script" >> /tmp/consul-version
