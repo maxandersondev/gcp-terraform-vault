@@ -33,10 +33,6 @@ resource "google_compute_instance_template" "consul" {
     subnetwork    = google_compute_subnetwork.management-sub.self_link
   }
 
-  network_interface {
-    subnetwork = google_compute_subnetwork.trust-sub.self_link
-  }
-
   metadata = {
     name = "consul-server"
   }
