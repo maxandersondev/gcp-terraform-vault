@@ -82,12 +82,17 @@ output "rendered" {
   value = data.template_file.default.rendered
 }
 
-
+/*
 resource "google_storage_bucket_object" "consul-startup" {
   name   = "consul.hcl"
   content = "${data.template_file.default.rendered}"
   //source = "scripts/consul-config.tpl"
   bucket = "hashi-storage-bucket"
+}
+*/
+resource "local_file" "consul-startup" {
+    content     = "foo!"
+    filename = "${path.module}/tmp/consul-startup.sh"
 }
 
 data "google_compute_image" "debian_9" {
