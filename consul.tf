@@ -82,7 +82,7 @@ output "rendered" {
   value = data.template_file.default.rendered
 }
 
-
+/*
 resource "google_storage_bucket_object" "consul-startup" {
   name   = "consul.hcl"
   //content = "${data.template_file.default.rendered}"
@@ -94,7 +94,7 @@ resource "local_file" "consul-startup" {
     content     = data.template_file.default.rendered
     filename = "${path.module}/tmp/consul-startup.sh"
 }
-
+*/
 data "google_compute_image" "debian_9" {
   family  = "debian-9"
   project = "debian-cloud"
