@@ -72,8 +72,8 @@ data "template_file" "default" {
   template = file("${path.module}/scripts/consul-config.tpl")
   vars = {
     consul_download_url = "releases.hashicorp.com/consul/${var.consul_version}/consul_${var.consul_version}_linux_amd64.zip"
-    encrypt_key = var.encrypt_key
-    data_center = var.data_center
+    encrypt_key = "${var.encrypt_key}"
+    data_center = "${var.data_center}"
   }
 }
 
