@@ -13,6 +13,11 @@ variable "gcp_region" {
   type        = string
 }
 
+variable "encrypt_key" {
+  description = "Consul encryption key, run: consul keygen"
+  type        = string
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
@@ -34,4 +39,10 @@ variable "consul_version" {
   description = "Version of consul we intend on using"
   type        = string
   default     = "1.7.3"
+}
+
+variable "data_center" {
+  description = "Datacenter declaration"
+  type        = string
+  default     = "dc1"
 }
