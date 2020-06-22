@@ -70,6 +70,9 @@ EOF
 sudo mv /tmp/consul.hcl /etc/consul.d
 sudo chown --recursive consul:consul /etc/consul.d
 sudo chmod 640 /etc/consul.d/server.hcl
+sudo systemctl enable consul
+sudo systemctl start consul
+
 
 export IP_INTERNAL=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 echo $IP_INTERNAL >> /tmp/my-ip
