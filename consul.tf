@@ -24,7 +24,7 @@ resource "google_compute_instance_template" "consul" {
   tags = ["consul-member", "consul-cluster-node"]
 
   metadata_startup_script = data.template_file.default.rendered
-
+  //metadata_startup_script = google_storage_bucket_object.consul-startup.self_link
   disk {
     source_image = data.google_compute_image.centos_8.self_link
   }
