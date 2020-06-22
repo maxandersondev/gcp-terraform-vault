@@ -46,3 +46,9 @@ variable "data_center" {
   type        = string
   default     = "dc1"
 }
+
+variable "consul_join_tag" {
+  description = "Tag to dynamically join nodes"
+  type        = string
+  default     = "consul-cluster-node"
+}

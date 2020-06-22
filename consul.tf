@@ -74,6 +74,7 @@ data "template_file" "default" {
     consul_download_url = "releases.hashicorp.com/consul/${var.consul_version}/consul_${var.consul_version}_linux_amd64.zip"
     encrypt_key = var.encrypt_key
     data_center = var.data_center
+    consul_join_tag = var.consul_join_tag
   }
 }
 

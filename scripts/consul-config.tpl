@@ -55,12 +55,21 @@ sudo mv /tmp/consul.service /etc/systemd/system/
 # set up consul.hcl
 sudo touch /etc/systemd/system/consul.service
 sudo cat << EOF >> /tmp/consul.hcl
-datacenter = ${data_center}
-data_dir = "/opt/consul"
-encrypt = ${encrypt_key}
+{
+  "datacenter": "${data_center}",
+  "data_dir": "/opt/consul",
+  "encrypt": "${encrypt_key}",
+  "log_level": "INFO",
+  "retry_join": ["provider=gce project_name=Hashi-Project tag_value=${consul_join_tag}"]
+
+  "server": true
+  "ui": true
+}
 
 EOF
 sudo mv /tmp/consul.hcl /etc/consul.d
+sudo chown --recursive consul:consul /etc/consul.d
+sudo chmod 640 /etc/consul.d/server.hcl
 
 export IP_INTERNAL=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 echo $IP_INTERNAL >> /tmp/my-ip
