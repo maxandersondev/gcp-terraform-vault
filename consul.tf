@@ -78,13 +78,18 @@ data "template_file" "default" {
   }
 }
 
-/*
+output "rendered" {
+  value = "${data.template_file.example.rendered}"
+}
+
+
 resource "google_storage_bucket_object" "consul-startup" {
   name   = "consul.hcl"
-  content = data.template_file.default.rendered
+  //content = data.template_file.default.rendered
+  source = "scripts/consul-config.tpl"
   bucket = "hashi-storage-bucket"
 }
-*/
+
 data "google_compute_image" "debian_9" {
   family  = "debian-9"
   project = "debian-cloud"
