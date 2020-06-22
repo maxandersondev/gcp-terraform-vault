@@ -85,8 +85,8 @@ output "rendered" {
 
 resource "google_storage_bucket_object" "consul-startup" {
   name   = "consul.hcl"
-  //content = data.template_file.default.rendered
-  source = "scripts/consul-config.tpl"
+  content = "hello world!"
+  //source = "scripts/consul-config.tpl"
   bucket = "hashi-storage-bucket"
 }
 
