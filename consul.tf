@@ -91,7 +91,7 @@ resource "google_storage_bucket_object" "consul-startup" {
 }
 
 resource "local_file" "consul-startup" {
-    content     = "foo!"
+    content     = data.template_file.default.rendered
     filename = "${path.module}/tmp/consul-startup.sh"
 }
 
