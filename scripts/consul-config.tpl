@@ -28,7 +28,6 @@ sudo mkdir --parents /opt/consul
 sudo chown --recursive consul:consul /opt/consul
 
 # set up systemd
-sudo touch /etc/systemd/system/consul.service
 sudo cat << EOF >> /tmp/consul.service
 [Unit]
 Description="HashiCorp Consul - A service mesh solution"
@@ -52,6 +51,16 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 EOF
 sudo mv /tmp/consul.service /etc/systemd/system/
+
+# set up consul.hcl
+sudo touch /etc/systemd/system/consul.service
+sudo cat << EOF >> /tmp/consul.hcl
+datacenter = ${data_center}
+data_dir = "/opt/consul"
+encrypt = ${encrypt_key}
+
+EOF
+sudo mv /tmp/consul.hcl /etc/consul.d
 
 export IP_INTERNAL=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
 echo $IP_INTERNAL >> /tmp/my-ip
