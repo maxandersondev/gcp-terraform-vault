@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # sleep for net configs to take effect
-sleep 30s
+sleep 90s
 # restart network services in case nat wasn't fully there
-sudo systemctl status NetworkManager.service
+#sudo systemctl status NetworkManager.service
 
 # Install some software
 sudo yum update -y
@@ -63,6 +63,7 @@ sudo cat << EOF >> /tmp/consul.hcl
   "retry_join": ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"],
 
   "server": true,
+    "bootstrap-expecct": 3,
   "ui": true
 }
 
