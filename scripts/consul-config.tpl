@@ -60,7 +60,7 @@ sudo cat << EOF >> /tmp/consul.hcl
   "data_dir": "/opt/consul",
   "encrypt": "${encrypt_key}",
   "log_level": "INFO",
-  "retry_join": ["provider=gce project_name=Hashi-Project tag_value=${consul_join_tag}"]
+  "retry_join": ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"]
 
   "server": true
   "ui": true
