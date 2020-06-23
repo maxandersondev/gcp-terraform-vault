@@ -37,7 +37,12 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "22", "8080", "1000-2000"]
+    ports    = ["80", "22", "8080", "1000-2000", "8200-8601"]
+  }
+  
+  allow {
+    protocol = "udp"
+    ports    = ["8301", "8302", "8600"]
   }
 
   source_ranges = ["0.0.0.0/0"]
