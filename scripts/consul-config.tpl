@@ -59,23 +59,22 @@ echo $IP_INTERNAL >> /tmp/my-ip
 # set up consul.hcl
 sudo touch /etc/systemd/system/consul.service
 sudo cat << EOF >> /tmp/consul.hcl
-{
-  datacenter    = ${data_center}
-  data_dir      = "/opt/consul/data"
-  encrypt       = "${encrypt_key}"
-  log_level     = "INFO"
-  advertise_addr = $IP_INTERNAL
-  retry_join    = ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"]
 
-  performance {
-    raft_multiplier = 1
-  }
-  server        = true
-  bootstrap_expect = 3
-  ui            = true
-  addresses {
-      http      = "0.0.0.0"
-  }
+datacenter  = ${data_center}
+data_dir      = "/opt/consul/data"
+encrypt       = "${encrypt_key}"
+log_level     = "INFO"
+advertise_addr = $IP_INTERNAL
+retry_join    = ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"]
+
+performance {
+  raft_multiplier = 1
+}
+server        = true
+bootstrap_expect = 3
+ui            = true
+addresses {
+    http      = "0.0.0.0"
 }
 EOF
 sudo mv /tmp/consul.hcl /etc/consul.d
