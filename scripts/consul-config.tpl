@@ -24,7 +24,7 @@ sudo unzip /tmp/consul.zip -d /usr/local/bin
 sudo chown root:root /usr/local/bin/consul
 
 # more config
-sudo mkdir --parents /opt/consul
+sudo mkdir --parents /opt/consul/data
 sudo chown --recursive consul:consul /opt/consul
 
 # set up systemd
@@ -52,19 +52,30 @@ WantedBy=multi-user.target
 EOF
 sudo mv /tmp/consul.service /etc/systemd/system/
 
+# get IP
+export IP_INTERNAL=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
+echo $IP_INTERNAL >> /tmp/my-ip
+
 # set up consul.hcl
 sudo touch /etc/systemd/system/consul.service
 sudo cat << EOF >> /tmp/consul.hcl
 {
-  "datacenter": "${data_center}",
-  "data_dir": "/opt/consul",
-  "encrypt": "${encrypt_key}",
-  "log_level": "INFO",
-  "retry_join": ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"],
+  datacenter    = ${data_center}
+  data_dir      = "/opt/consul/data"
+  encrypt       = "${encrypt_key}"
+  log_level     = "INFO"
+  advertise_addr = $IP_INTERNAL
+  retry_join    = ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"]
 
-  "server": true,
-    "bootstrap_expect": 3,
-  "ui": true
+  performance {
+      raft_multiplier = 1
+  }
+  server        = true
+  bootstrap_expect = 3
+  ui            = true
+  addresses {
+      http      = "0.0.0.0"
+  }
 }
 
 EOF
@@ -73,11 +84,6 @@ sudo chown --recursive consul:consul /etc/consul.d
 sudo chmod 640 /etc/consul.d/server.hcl
 sudo systemctl enable consul
 sudo systemctl start consul
-
-
-export IP_INTERNAL=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1')
-echo $IP_INTERNAL >> /tmp/my-ip
-sleep 30s
 
 sudo wget http://${consul_download_url} -O /tmp/consul.zip
 echo "Finished script" >> /tmp/consul-version
