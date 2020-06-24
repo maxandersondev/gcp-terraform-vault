@@ -64,7 +64,7 @@ datacenter  = "${data_center}"
 data_dir      = "/opt/consul/data"
 encrypt       = "${encrypt_key}"
 log_level     = "INFO"
-advertise_addr = $IP_INTERNAL
+advertise_addr = "$IP_INTERNAL"
 retry_join    = ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"]
 
 performance {
