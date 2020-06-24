@@ -68,7 +68,7 @@ sudo cat << EOF >> /tmp/consul.hcl
   retry_join    = ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"]
 
   performance {
-      raft_multiplier = 1
+    raft_multiplier = 1
   }
   server        = true
   bootstrap_expect = 3
@@ -77,7 +77,6 @@ sudo cat << EOF >> /tmp/consul.hcl
       http      = "0.0.0.0"
   }
 }
-
 EOF
 sudo mv /tmp/consul.hcl /etc/consul.d
 sudo chown --recursive consul:consul /etc/consul.d
