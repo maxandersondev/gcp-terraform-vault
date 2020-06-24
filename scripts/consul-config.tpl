@@ -63,7 +63,7 @@ sudo cat << EOF >> /tmp/consul.hcl
   "retry_join": ["provider=gce project_name=hashi-project tag_value=${consul_join_tag}"],
 
   "server": true,
-    "bootstrap-expecct": 3,
+    "bootstrap-expect": 3,
   "ui": true
 }
 
