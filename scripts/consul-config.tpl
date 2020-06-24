@@ -60,7 +60,7 @@ echo $IP_INTERNAL >> /tmp/my-ip
 sudo touch /etc/systemd/system/consul.service
 sudo cat << EOF >> /tmp/consul.hcl
 
-datacenter  = ${data_center}
+datacenter  = "${data_center}"
 data_dir      = "/opt/consul/data"
 encrypt       = "${encrypt_key}"
 log_level     = "INFO"
