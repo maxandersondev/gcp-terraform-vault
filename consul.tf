@@ -78,7 +78,7 @@ data "template_file" "default" {
   }
 }
 
-output "rendered" {
+output "rendered" "consul_output"{
   value = data.template_file.default.rendered
 }
 
