@@ -41,6 +41,12 @@ variable "consul_version" {
   default     = "1.7.3"
 }
 
+variable "vault_version" {
+  description = "Version of vault we intend on using"
+  type        = string
+  default     = "1.4.2"
+}
+
 variable "data_center" {
   description = "Datacenter declaration"
   type        = string
