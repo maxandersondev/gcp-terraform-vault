@@ -63,7 +63,7 @@ output "target_pools_members" "vault-members"{
   value = google_compute_target_pool.vault.instances
 }
 
-output "startup_script_rendered" "vault_output"{
+output "vault_startup_script_rendered" {
   value = data.template_file.vault.rendered
 }
 
