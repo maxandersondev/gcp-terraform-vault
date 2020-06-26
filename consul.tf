@@ -64,7 +64,7 @@ output "target_pools_members" "consul_members"{
   value = google_compute_target_pool.consul.instances
 }
 
-output "vault_startup_script_rendered" {
+output "consul_startup_script_rendered" {
   value = data.template_file.default.rendered
 }
 
