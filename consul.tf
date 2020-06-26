@@ -78,10 +78,6 @@ data "template_file" "default" {
   }
 }
 
-output "rendered" "consul_output"{
-  value = data.template_file.default.rendered
-}
-
 /*
 resource "google_storage_bucket_object" "consul-startup" {
   name   = "consul.hcl"
