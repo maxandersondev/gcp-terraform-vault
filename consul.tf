@@ -60,7 +60,7 @@ resource "google_compute_region_instance_group_manager" "consul" {
   wait_for_instances = true
 }
 
-output "target_pools_members" "consul_members"{
+output "consul_target_pools_members" {
   value = google_compute_target_pool.consul.instances
 }
 
