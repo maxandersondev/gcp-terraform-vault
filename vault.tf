@@ -59,7 +59,7 @@ resource "google_compute_region_instance_group_manager" "vault" {
   wait_for_instances = true
 }
 
-output "target_pools_members" {
+output "target_pools_members" "vault-members"{
   value = google_compute_target_pool.vault.instances
 }
 
