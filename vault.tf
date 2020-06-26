@@ -23,7 +23,7 @@ resource "google_compute_instance_template" "vault" {
 
   tags = ["vault-member", "vault-cluster-node"]
 
-  metadata_startup_script = data.template_file.default.rendered
+  metadata_startup_script = data.template_file.vault.rendered
   disk {
     source_image = data.google_compute_image.centos_8.self_link
   }
@@ -64,10 +64,10 @@ output "target_pools_members" {
 }
 
 output "startup_script_rendered" {
-  value = data.template_file.default.rendered
+  value = data.template_file.vault.rendered
 }
 
-data "template_file" "default" {
+data "template_file" "vault" {
   template = file("${path.module}/scripts/vault-config.tpl")
   vars = {
     vault_download_url = "releases.hashicorp.com/vault/${var.vault_version}/${var.vault_version}_linux_amd64.zip"
@@ -79,6 +79,6 @@ data "template_file" "default" {
 }
 
 output "rendered" {
-  value = data.template_file.default.rendered
+  value = data.template_file.vault.rendered
 }
 
