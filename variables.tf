@@ -33,7 +33,10 @@ variable "keyring_location" {
   type        = string
 }
 
-
+variable "service_acct_email" {
+  description = "Service account email"
+  type        = string
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS

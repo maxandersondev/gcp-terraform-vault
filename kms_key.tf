@@ -1,7 +1,3 @@
-resource "google_service_account" "vault_kms_service_account" {
-  account_id   = "terraform-svc"
-  display_name = "Vault KMS for auto-unseal"
-}
 
 # Create a KMS key ring
 resource "google_kms_key_ring" "key_ring" {
@@ -24,6 +20,6 @@ resource "google_kms_key_ring_iam_binding" "vault_iam_kms_binding" {
    role = "roles/owner"
 
    members = [
-     "serviceAccount:${google_service_account.vault_kms_service_account.email}",
+     "serviceAccount:${var.service_acct_email}",
    ]
 }
