@@ -1,3 +1,8 @@
+resource "google_service_account" "vault_kms_service_account" {
+  account_id   = "vault-gcpkms"
+  display_name = "Vault KMS for auto-unseal"
+}
+
 # Create a KMS key ring
 resource "google_kms_key_ring" "key_ring" {
    project  = var.gcp_project_id
