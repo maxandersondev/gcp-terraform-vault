@@ -137,7 +137,7 @@ sudo systemctl start consul
 sudo cat << EOF >> /tmp/vault.hcl
 storage "consul" {
   address = "127.0.0.1:8500"
-  path    = "vault"
+  path    = "vault/"
 }
 
 listener "tcp" {

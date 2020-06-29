@@ -18,6 +18,23 @@ variable "encrypt_key" {
   type        = string
 }
 
+variable "key_ring" {
+  description = "Vault kms unseal key"
+  type        = string
+}
+  
+variable "crypto_key" {
+  description = "Vault crypto unseal key"
+  type        = string
+}
+
+variable "keyring_location" {
+  description = "Vault crypto unseal key"
+  type        = string
+}
+
+
+
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
