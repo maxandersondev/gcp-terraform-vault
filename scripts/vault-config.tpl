@@ -156,6 +156,6 @@ sudo mv /tmp/vault.hcl /etc/vault.d
 sudo chown --recursive vault:vault /etc/vault.d
 sudo chmod 640 /etc/vault.d/vault.hcl
 sudo systemctl enable vault
-# sudo systemctl start vault
+sudo systemctl start vault
 
 echo "Finished script" >> /tmp/vault-status
