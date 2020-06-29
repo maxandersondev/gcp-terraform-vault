@@ -70,7 +70,7 @@ output "vault_startup_script_rendered" {
 data "template_file" "vault" {
   template = file("${path.module}/scripts/vault-config.tpl")
   vars = {
-    vault_download_url = "releases.hashicorp.com/vault/${var.vault_version}/${var.vault_version}_linux_amd64.zip"
+    vault_download_url = "releases.hashicorp.com/vault/${var.vault_version}/vault_${var.vault_version}_linux_amd64.zip"
     consul_download_url = "releases.hashicorp.com/consul/${var.consul_version}/consul_${var.consul_version}_linux_amd64.zip"
     encrypt_key = var.encrypt_key
     data_center = var.data_center
