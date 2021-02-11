@@ -145,6 +145,13 @@ listener "tcp" {
   tls_disable = 1
 }
 
+seal "gcpckms" {
+  project     = "ahead-manderson"
+  region      = "global"
+  key_ring    = "hashi-key-ring"
+  crypto_key  = "hashi-crypto-key"
+}
+
 telemetry {
   statsite_address = "127.0.0.1:8125"
   disable_hostname = true
